@@ -1,0 +1,35 @@
+{% extends "base.html" %}
+{% block content %}
+<section class="card">
+    <div class="section-header">
+        <div>
+            <p class="muted">Mentorship</p>
+            <h2>{{ mentorship.goal }}</h2>
+            <p class="muted">Mentor: {{ mentorship.mentor.name }} • Mentee: {{ mentorship.mentee.name }}</p>
+        </div>
+        <a class="button ghost" href="{{ url_for('mentorships') }}">Back</a>
+    </div>
+
+    <div class="message-thread">
+        {% for message in messages %}
+            <div class="message">
+                <div class="meta">
+                    <strong>{{ message.sender.name }}</strong>
+                    <span class="muted">{{ message.created_at.strftime('%Y-%m-%d %H:%M') }}</span>
+                </div>
+                <p>{{ message.body }}</p>
+            </div>
+        {% else %}
+            <p class="muted">No messages yet. Start the conversation!</p>
+        {% endfor %}
+    </div>
+
+    <form method="post" class="form-grid">
+        <label>
+            New message
+            <textarea name="body" rows="3" required></textarea>
+        </label>
+        <button class="button primary" type="submit">Send</button>
+    </form>
+</section>
+{% endblock %}
