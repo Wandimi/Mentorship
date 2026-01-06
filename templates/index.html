@@ -1,0 +1,38 @@
+{% extends "base.html" %}
+{% block content %}
+<section class="hero">
+    <div class="hero-copy">
+        <p class="tagline">Grow faster with mentorship</p>
+        <h1>Find mentors, guide mentees, and track progress in one place.</h1>
+        <p>Join a community that matches ambition with experience. Request or offer mentorship, collaborate on goals, and celebrate achievements.</p>
+        <div class="hero-actions">
+            <a class="button primary" href="{{ url_for('register') }}">Get Started</a>
+            <a class="button ghost" href="{{ url_for('login') }}">Sign In</a>
+        </div>
+    </div>
+    <div class="hero-card">
+        <h3>Instant overview</h3>
+        <ul>
+            <li>🌍 Browse mentors and mentees</li>
+            <li>🧭 Create goal-driven mentorships</li>
+            <li>💬 Keep conversations in one thread</li>
+            <li>✅ Mark milestones and completion</li>
+        </ul>
+    </div>
+</section>
+
+<section class="feature-grid">
+    <article>
+        <h3>Purpose-built profiles</h3>
+        <p>Showcase skills, interests, and availability so matches feel effortless.</p>
+    </article>
+    <article>
+        <h3>Structured requests</h3>
+        <p>Mentees propose goals; mentors accept, decline, or complete when ready.</p>
+    </article>
+    <article>
+        <h3>Aligned communication</h3>
+        <p>Threaded messaging inside each mentorship keeps everyone on track.</p>
+    </article>
+</section>
+{% endblock %}

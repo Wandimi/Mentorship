@@ -1,0 +1,59 @@
+{% extends "base.html" %}
+{% block content %}
+<section class="split">
+    <div class="card">
+        <h2>Your mentorships</h2>
+        <div class="list">
+            {% for item in requests %}
+                <article>
+                    <div>
+                        <h4>{{ item.goal }}</h4>
+                        <p class="muted">Mentor: {{ item.mentor.name }} • Mentee: {{ item.mentee.name }}</p>
+                        <p class="muted">Created {{ item.created_at.strftime('%Y-%m-%d') }}</p>
+                    </div>
+                    <div class="actions">
+                        <span class="status {{ item.status }}">{{ item.status }}</span>
+                        <a class="button small ghost" href="{{ url_for('mentorship_messages', request_id=item.id) }}">Messages</a>
+                        {% if current_user.id == item.mentor_id and item.status == 'pending' %}
+                            <form action="{{ url_for('accept_request', request_id=item.id) }}" method="post">
+                                <button class="button small primary" type="submit">Accept</button>
+                            </form>
+                            <form action="{{ url_for('decline_request', request_id=item.id) }}" method="post">
+                                <button class="button small ghost" type="submit">Decline</button>
+                            </form>
+                        {% endif %}
+                        {% if item.status == 'accepted' and current_user.id in [item.mentor_id, item.mentee_id] %}
+                            <form action="{{ url_for('complete_request', request_id=item.id) }}" method="post">
+                                <button class="button small" type="submit">Complete</button>
+                            </form>
+                        {% endif %}
+                    </div>
+                </article>
+            {% else %}
+                <p class="muted">No mentorships yet. Create a new request to get started.</p>
+            {% endfor %}
+        </div>
+    </div>
+
+    <div class="card">
+        <h2>Create a mentorship request</h2>
+        <p class="muted">Only mentees can start a mentorship. Choose a mentor and describe what you want to achieve.</p>
+        <form method="post" class="form-grid">
+            <label>
+                Mentor
+                <select name="mentor_id" required>
+                    <option value="">Select a mentor</option>
+                    {% for mentor in mentors %}
+                        <option value="{{ mentor.id }}">{{ mentor.name }} — {{ mentor.skills or 'Add skills' }}</option>
+                    {% endfor %}
+                </select>
+            </label>
+            <label>
+                Goal
+                <textarea name="goal" rows="3" placeholder="e.g., Prepare for engineering management interviews" required></textarea>
+            </label>
+            <button class="button primary" type="submit">Send request</button>
+        </form>
+    </div>
+</section>
+{% endblock %}
