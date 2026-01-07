@@ -1,0 +1,25 @@
+{% extends "base.html" %}
+{% block content %}
+<section class="card">
+    <h2>Edit profile</h2>
+    <form method="post" class="form-grid">
+        <label>
+            Name
+            <input type="text" name="name" value="{{ current_user.name }}" required>
+        </label>
+        <label>
+            Bio
+            <textarea name="bio" rows="3" placeholder="Share your background and interests">{{ current_user.bio }}</textarea>
+        </label>
+        <label>
+            Skills / Interests (comma separated)
+            <input type="text" name="skills" value="{{ current_user.skills }}">
+        </label>
+        <label>
+            Availability
+            <input type="text" name="availability" value="{{ current_user.availability }}" placeholder="e.g., Weekly on Tuesdays">
+        </label>
+        <button class="button primary" type="submit">Save changes</button>
+    </form>
+</section>
+{% endblock %}

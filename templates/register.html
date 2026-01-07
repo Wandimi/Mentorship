@@ -1,0 +1,30 @@
+{% extends "base.html" %}
+{% block content %}
+<section class="card">
+    <h2>Create your account</h2>
+    <form method="post" class="form-grid">
+        <label>
+            Full name
+            <input type="text" name="name" required>
+        </label>
+        <label>
+            Email
+            <input type="email" name="email" required>
+        </label>
+        <label>
+            Password
+            <input type="password" name="password" required>
+        </label>
+        <label>
+            I want to join as
+            <select name="role" required>
+                <option value="">Select a role</option>
+                <option value="mentor">Mentor</option>
+                <option value="mentee">Mentee</option>
+            </select>
+        </label>
+        <button class="button primary" type="submit">Create account</button>
+    </form>
+    <p class="auth-toggle">Already have an account? <a href="{{ url_for('login') }}">Sign in</a>.</p>
+</section>
+{% endblock %}

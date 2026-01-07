@@ -1,0 +1,66 @@
+{% extends "base.html" %}
+{% block content %}
+<section class="split">
+    <div class="card">
+        <h2>Hello, {{ current_user.name }} 👋</h2>
+        <p class="muted">Role: {{ current_user.role|capitalize }}</p>
+        <p>{{ current_user.bio or "Share a short bio to help others get to know you." }}</p>
+        <div class="pill-list">
+            {% for skill in (current_user.skills or "").split(",") if skill.strip() %}
+                <span class="pill">{{ skill.strip() }}</span>
+            {% endfor %}
+        </div>
+        <p class="muted">Availability: {{ current_user.availability or "Not specified yet." }}</p>
+        <a class="button ghost" href="{{ url_for('edit_profile') }}">Update profile</a>
+    </div>
+
+    <div class="card">
+        <h3>Community pulse</h3>
+        <div class="stats-grid">
+            <div><strong>{{ stats.total_users }}</strong><span>Members</span></div>
+            <div><strong>{{ stats.mentor_count }}</strong><span>Mentors</span></div>
+            <div><strong>{{ stats.mentee_count }}</strong><span>Mentees</span></div>
+            <div><strong>{{ stats.active_mentorships }}</strong><span>Active mentorships</span></div>
+        </div>
+    </div>
+</section>
+
+<section class="split">
+    <div class="card">
+        <div class="section-header">
+            <h3>Find a mentor</h3>
+            <a class="button small" href="{{ url_for('mentorships') }}">Create request</a>
+        </div>
+        <div class="list">
+            {% for mentor in mentors %}
+                <article>
+                    <div>
+                        <h4>{{ mentor.name }}</h4>
+                        <p class="muted">{{ mentor.skills or "Add skills to your profile to stand out." }}</p>
+                        <p class="muted">Availability: {{ mentor.availability or "Not set" }}</p>
+                    </div>
+                </article>
+            {% else %}
+                <p class="muted">No mentors yet—invite colleagues to join!</p>
+            {% endfor %}
+        </div>
+    </div>
+
+    <div class="card">
+        <h3>Your mentorships</h3>
+        <div class="list">
+            {% for item in my_requests %}
+                <article>
+                    <div>
+                        <h4>{{ item.goal }}</h4>
+                        <p class="muted">Mentor: {{ item.mentor.name }} • Mentee: {{ item.mentee.name }}</p>
+                    </div>
+                    <span class="status {{ item.status }}">{{ item.status }}</span>
+                </article>
+            {% else %}
+                <p class="muted">Start a mentorship to see progress here.</p>
+            {% endfor %}
+        </div>
+    </div>
+</section>
+{% endblock %}
